@@ -1,0 +1,149 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0" author="MakarevichR">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="chat_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="money" type="DECIMAL(10,2)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="MakarevichR">
+        <createTable tableName="menu">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="product_name" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cost" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="MakarevichR">
+        <createTable tableName="product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="menu_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="product_name" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cost" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="MakarevichR">
+        <createTable tableName="preorder">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="created" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="MakarevichR">
+        <createTable tableName="preorder_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="preorder_id" type="BIGINT">
+            </column>
+
+            <column name="product_id" type="BIGINT">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="MakarevichR">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="preorder"
+                                 constraintName="fk_preorder_user"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="MakarevichR">
+        <addForeignKeyConstraint baseColumnNames="preorder_id"
+                                 baseTableName="preorder_product"
+                                 constraintName="fk_preorder_product_preorder"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="preorder"/>
+    </changeSet>
+
+    <changeSet id="1.0.7" author="MakarevichR">
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="preorder_product"
+                                 constraintName="fk_preorder_product_product"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="MakarevichR">
+        <insert tableName="menu">
+            <column name="id" value="1"></column>
+            <column name="product_name" value="dddd"></column>
+            <column name="cost" value="1"></column>
+            <column name="status" value="ACTIVE"></column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.9" author="MakarevichR">
+        <insert tableName="menu">
+            <column name="id" value="2"></column>
+            <column name="product_name" value="fffff"></column>
+            <column name="cost" value="2"></column>
+            <column name="status" value="ACTIVE"></column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
